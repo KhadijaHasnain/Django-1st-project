@@ -1,0 +1,50 @@
+<script>
+    $(document).ready(function () {
+        $('#logout-link').click(function () {
+        });
+    });
+</script>
+
+<nav style="background-color:#0B1D66;" class="navbar navbar-expand-sm navbar-dark">
+    <img style="width:auto; height:70px; margin:5px;" class="banlogo" src="/static/img/logo.png" alt="logo">
+    <a class="navbar-brand" href="/">Inventory</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'store:list'%}">
+                    <i class="fab fa-container-storage red"></i>
+                    Store
+                </a>
+            </li>
+            <li class="dropdown">
+                <a id="logout-link" class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                    {{user.first_name}}
+                </a>
+                <div class="dropdown-menu " aria-labelledby="dropdownId"  style="background-color:#0B1D66; color:white;">
+                    {% comment %} <a href="{%url 'accounts:profile' pk=user.id %}" class="dropdown-item">
+                        Profile
+                    </a> {% endcomment %}
+                    <a href="{%url 'accounts:login' %}" class="dropdown-item" id="logout-link">
+                        Log out
+                    </a>
+                </div>
+            </li>
+            </a>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" method="GET" id="search-form" data-url="{%url 'item:search'%}"
+            action="{%url 'item:search'%}">
+            <input class="form-control mr-sm-2" name="query" id="item" type="text" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" id="search-btn" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+ 

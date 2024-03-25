@@ -1,0 +1,113 @@
+{% comment %} {% extends '../base.html' %} {% endcomment %}
+{% load widget_tweaks %}
+{% block title %}
+{% endblock title %}
+
+<style>
+  button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    background: blue ;
+    width: 20%;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    margin-top : 10px;
+  }
+
+  button:hover,
+  active,
+  button:focus {
+    background: #43A047;
+  }
+
+  body {
+    background-image: url('https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+    background-size: cover;
+    background-position: center; 
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Additional styles for form container */
+  .main-agileinfo {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 30px;
+    border-radius: 10px; 
+    text-align: center;
+    width : 50%;
+    margin-top : 200px;
+  }
+  
+  h1{
+    text-align : center;
+    color : black;
+  }
+
+  .form-group{
+    margin-top:20px;
+    text-align : left;
+  }
+
+  /* Additional styles for form inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%; /* Adjust the width as needed */
+    height: 30px;
+    border-radius: 5px; /* Rounds the corners of the input fields */
+    border: 1px solid #ccc; /* Adds a border to the input fields */
+    box-sizing: border-box; /* Ensures the padding and border are included in the width */
+  }
+
+  label {
+    display: block; /* Ensures each label appears on a new line */
+    margin-bottom: 5px; /* Adds some space below each label */
+    font-weight: bold; /* Makes the label text bold */
+    color: black; /* Sets the color of the label text */
+  }
+
+  img.logo {
+    max-width: 100px; /* Set maximum width for the logo image */
+    margin-bottom: 20px; /* Add some space below the logo */
+    margin-top: -30px;
+  }
+  
+</style>
+
+{% block content %}
+<div class="main-agileinfo">
+  <img class="logo" src="/static/img/logo.png" alt="Logo">
+  <h1>Signup</h1>
+  <form action="{% url 'accounts:signup' %}" method="post">
+    {% csrf_token %}
+    <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+      {% for error in form.non_field_errors %}
+      <div class="text-warning">
+        {{ error }}
+      </div>
+      {% endfor %}
+    </div>
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {% render_field field|attr:"required autofocus" class="form-control" placeholder=field.label %}
+      <div class="{% if field.errors %} invalid{% endif %} text-danger">
+        {% for error in field.errors %}
+        <p class="help-block text-warning">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit">Sign Up</button>
+  </form>
+  <p>Have an Account? <a href="{% url 'accounts:login' %}"> Login Now!</a></p>
+</div>
+{% endblock content %}
